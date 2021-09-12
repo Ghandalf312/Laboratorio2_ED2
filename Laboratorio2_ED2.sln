@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laboratorio2_ED2", "Laboratorio2_ED2\Laboratorio2_ED2.csproj", "{8FB093D7-F82A-4F11-8883-A4FB571E068A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Laboratorio2_ED2", "Laboratorio2_ED2\Laboratorio2_ED2.csproj", "{8FB093D7-F82A-4F11-8883-A4FB571E068A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary", "ClassLibrary\ClassLibrary.csproj", "{A7696EE2-C1E2-4579-BF85-5B8B4C872B08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8FB093D7-F82A-4F11-8883-A4FB571E068A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FB093D7-F82A-4F11-8883-A4FB571E068A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FB093D7-F82A-4F11-8883-A4FB571E068A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7696EE2-C1E2-4579-BF85-5B8B4C872B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7696EE2-C1E2-4579-BF85-5B8B4C872B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7696EE2-C1E2-4579-BF85-5B8B4C872B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7696EE2-C1E2-4579-BF85-5B8B4C872B08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
