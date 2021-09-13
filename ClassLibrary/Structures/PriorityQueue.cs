@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace CustomGenerics.Structures
+namespace ClassLibrary.Structures
 {
     public class PriorityQueue<T>
     {
@@ -31,6 +31,7 @@ namespace CustomGenerics.Structures
             }
         }
 
+        #region Insert
         private void Add(PQNode<T> newNode, double priority)
         {
             var NewNodeFather = SearchLastNode(Root, 1);
@@ -92,8 +93,9 @@ namespace CustomGenerics.Structures
                 return currentNode;
             }
         }
+        #endregion
 
-
+        #region Pop
         public T GetFirst()
         {
             if (Root == null)
@@ -127,7 +129,9 @@ namespace CustomGenerics.Structures
             DataNumber--;
             return FirstNode.Value;
         }
+        #endregion
 
+        #region Order
         private void OrderDownToUp(PQNode<T> currentNode)
         {
             if (currentNode.Father != null)
@@ -180,5 +184,6 @@ namespace CustomGenerics.Structures
             currentNode.Father.Priority = Priority1;
             currentNode.Father.Value = Value1;
         }
+        #endregion
     }
 }
