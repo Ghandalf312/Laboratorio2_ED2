@@ -55,7 +55,7 @@ namespace api.Controllers
         // POST api/<HuffmanController>
         [HttpPost]
         [Route("compress/{name}")]
-        public async Task<IActionResult> PostHuffmanAsync([FromForm] IFormFile file, string name)
+        public async Task<IActionResult> PostHuffmanAsync([FromForm] IFormFile file, string name) // Key: file | Value: [nombre archivo].txt | Description: file
         {
             Singleton.Instance.HuffmanTree = new Huffman<HuffmanCharacter>($"{Environment.ContentRootPath}");
             int i = 1;
@@ -72,6 +72,25 @@ namespace api.Controllers
 
             return PhysicalFile($"{Environment.ContentRootPath}/{name}", MediaTypeNames.Text.Plain, $"{name}.huff");
           
+        }
+
+        // POST api/<HuffmanController>
+        [HttpPost]
+        [Route("decompress")]
+        public async Task<IActionResult> Decompress([FromForm] IFormFile file) // Key: file | Value: [nombre archivo].huff | Description: file
+        {
+                Singleton.Instance.HuffmanTree = new Huffman<HuffmanCharacter>($"{Environment.ContentRootPath}");
+                HuffmanCompressions.LoadHistList(Environment.ContentRootPath);
+                var name = "";
+                foreach (var item in Singleton.Instance.HistoryList)
+                {
+                    if (item.CompressedName == file.FileName)
+                    {
+                        name = item.OriginalName;
+                    }
+                }
+                await Singleton.Instance.HuffmanTree.DecompressFile(file, name);
+                return PhysicalFile($"{Environment.ContentRootPath}/{name}", MediaTypeNames.Text.Plain, ".txt"); 
         }
     }
 }
