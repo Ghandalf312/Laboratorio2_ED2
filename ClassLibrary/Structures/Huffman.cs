@@ -17,14 +17,12 @@ namespace ClassLibrary.Structures
 {
     public class Huffman<T> : ICompressor where T : IProbability, new()
     {
-        #region Variables
         HuffmanNode<T> Root;
         public int NextId = 1;
         string FilePath;
         Dictionary<byte, HuffmanNode<T>> BytesDictionary;
         PriorityQueue<HuffmanNode<T>> priorityQueue; 
         double BytesCount;
-        #endregion
 
         public Huffman(string filePath)
         {
