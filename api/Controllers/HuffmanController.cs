@@ -36,6 +36,15 @@ namespace api.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        // GET: api/<HuffmanController>
+        [HttpGet]
+        [Route("compressions")]
+        public List<HuffmanCompressions> GetListCompress()
+        {
+            HuffmanCompressions.LoadHistList(Environment.ContentRootPath);
+            return Singleton.Instance.HistoryList;
+        }
+
         // GET api/<HuffmanController>/5
         [HttpGet("{id}")]
         public string Get(int id)
@@ -56,7 +65,7 @@ namespace api.Controllers
                 name = originalname + "(" + i.ToString() + ")";
                 i++;
             }
-            await Singleton.Instance.HuffmanTree.CompressFile(Environment.ContentRootPath, file, name);
+                await Singleton.Instance.HuffmanTree.CompressFile(Environment.ContentRootPath, file, name);
             var HuffmanInfo = new HuffmanCompressions();
             HuffmanInfo.SetAttributes(Environment.ContentRootPath, file.FileName, name);
             Singleton.Instance.HistoryList.Add(HuffmanInfo);
