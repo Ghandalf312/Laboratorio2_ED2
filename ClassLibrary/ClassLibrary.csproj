@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Compress\" />
+  </ItemGroup>
+
 </Project>
