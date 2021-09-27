@@ -16,8 +16,9 @@ using System.Security.Cryptography;
 using System.Net;
 
 
-
-    public class LZWCompress 
+namespace ClassLibrary.Compress
+{
+    public class LZWCompress
     {
         #region Variables
         Dictionary<string, int> LZWTable = new Dictionary<string, int>();
@@ -290,3 +291,4 @@ using System.Net;
         #endregion
     }
 
+}
