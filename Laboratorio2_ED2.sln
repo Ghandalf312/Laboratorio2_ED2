@@ -5,12 +5,12 @@ VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary", "ClassLibrary\ClassLibrary.csproj", "{A7696EE2-C1E2-4579-BF85-5B8B4C872B08}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuffmanTest", "HuffmanTest\HuffmanTest.csproj", "{BF333B25-6799-463E-9E53-C61426F3741D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LZWTest", "HuffmanTest\LZWTest.csproj", "{BF333B25-6799-463E-9E53-C61426F3741D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A7696EE2-C1E2-4579-BF85-5B8B4C872B08} = {A7696EE2-C1E2-4579-BF85-5B8B4C872B08}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{6FD6F942-3B17-4A1E-A296-880E42841AE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api", "api\api.csproj", "{6FD6F942-3B17-4A1E-A296-880E42841AE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

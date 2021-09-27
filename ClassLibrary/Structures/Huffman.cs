@@ -1,15 +1,9 @@
 ﻿using ClassLibrary.Utilities;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.MemoryMappedFiles;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -119,7 +113,7 @@ namespace ClassLibrary.Structures
             newFile.Close();
         }
 
-        public async Task DecompressFile(IFormFile file, string name)
+        public async Task DecompressFile(string path, IFormFile file, string name)
         {
             using var saver = new FileStream($"{FilePath}/{file.FileName}", FileMode.OpenOrCreate);
             await file.CopyToAsync(saver);

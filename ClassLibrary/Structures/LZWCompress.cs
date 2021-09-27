@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ClassLibrary.Structures;
 using ClassLibrary.Utilities;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 
-namespace ClassLibrary.Compress
+namespace ClassLibrary.Structures
 {
-    public class LZWCompress
+    public class LZWCompress //: ICompressor
     {
-        #region Variables
         Dictionary<string, int> LZWTable = new Dictionary<string, int>();
         Dictionary<int, List<byte>> DecompressLZWTable = new Dictionary<int, List<byte>>();
         List<byte> Differentchar = new List<byte>();
@@ -32,9 +35,7 @@ namespace ClassLibrary.Compress
             MaxValueLength = 0;
             code = 1;
         }
-        #endregion
 
-        #region Compression
         private void FillDictionary(byte[] Text)
         {
             //First reading through the text
@@ -144,9 +145,6 @@ namespace ClassLibrary.Compress
             ResetVariables();
             return ByteGenerator.ConvertToString(returningList.ToArray());
         }
-
-
-        #endregion
 
         #region Decompression
 

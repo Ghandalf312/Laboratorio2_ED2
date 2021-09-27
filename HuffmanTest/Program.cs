@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using ClassLibrary.Structures;
 using api.Models;
-using ClassLibrary.Compress;
-namespace HuffmanTest
+
+namespace LZWTest
 {
     class Program
     {
@@ -26,7 +26,7 @@ namespace HuffmanTest
                     Console.WriteLine(lZW.DecompressText(CompressedText));
                     Console.ReadLine();
                 }
-                Console.WriteLine("Feliz día! :D ");
+                Console.WriteLine("Feliz día! :D");
                 Console.ReadLine();
             }
             catch
