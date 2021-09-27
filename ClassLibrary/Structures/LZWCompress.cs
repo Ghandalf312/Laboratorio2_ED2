@@ -1,19 +1,7 @@
-﻿using ClassLibrary.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using ClassLibrary.Utilities;
-using System.Runtime.ConstrainedExecution;
-using System.Buffers;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using Microsoft.AspNetCore.Http.Features;
-using System.Threading;
-using System.Security.Cryptography;
-using System.Net;
 
 
 namespace ClassLibrary.Compress
