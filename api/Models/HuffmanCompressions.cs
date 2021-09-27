@@ -18,6 +18,8 @@ namespace api.Models
         public double CompressionFactor { get; set; }
         public double ReductionPercentage { get; set; }
 
+        public HuffmanCompressions() { }
+
         public void SetAttributes(string path, string prevName, string newName)
         {
             var CountBytesO = System.IO.File.ReadAllBytes($"{path}/{prevName}");

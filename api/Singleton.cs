@@ -20,6 +20,7 @@ namespace api
             }
         }
         public Huffman<HuffmanCharacter> HuffmanTree;
+        public LZWCompress _Compressions = new LZWCompress();
         public List<HuffmanCompressions> HistoryList = new List<HuffmanCompressions>();
     }
 }

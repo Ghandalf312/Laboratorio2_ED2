@@ -38,7 +38,8 @@ namespace ClassLibrary.Structures
 
         private void FillDictionary(byte[] Text)
         {
-            //First reading through the text
+
+
             foreach (var character in Text)
             {
                 if (!LZWTable.ContainsKey(character.ToString()))
@@ -52,7 +53,6 @@ namespace ClassLibrary.Structures
 
         private void Compression(byte[] Text)
         {
-            //Segundo recorrido y asignación de valores
             Characters = Text.ToList();
             MaxValueLength = 0;
             while (Characters.Count != 0)
@@ -106,7 +106,7 @@ namespace ClassLibrary.Structures
 
         public string CompressText(string text)
         {
-            var buffer = ByteGenerator.ConvertToBytes(text);//falta repetir esto varias veces por si es un texto muy grande
+            var buffer = ByteGenerator.ConvertToBytes(text);
             FillDictionary(buffer);
             Compression(buffer);
             MaxValueLength = Convert.ToString(NumbersToWrite.Max(), 2).Length;
@@ -146,6 +146,7 @@ namespace ClassLibrary.Structures
             return ByteGenerator.ConvertToString(returningList.ToArray());
         }
 
+        
         #region Decompression
 
         private byte[] FillDecompressionDictionary(byte[] text)
