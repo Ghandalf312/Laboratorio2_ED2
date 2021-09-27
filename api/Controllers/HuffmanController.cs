@@ -18,7 +18,7 @@ using System.Text.Json;
 
 namespace api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class HuffmanController : ControllerBase
     {

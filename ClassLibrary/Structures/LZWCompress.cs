@@ -51,6 +51,141 @@ namespace ClassLibrary.Structures
             }
         }
 
+        public async Task CompressFile(string path, IFormFile file, string name)
+        {
+            if (System.IO.File.Exists($"{path}/Uploads/{file.FileName}"))
+            {
+                System.IO.File.Delete($"{path}/Uploads/{file.FileName}");
+            }
+
+            if (System.IO.File.Exists(($"{path}/Compressions/{name}.lzw")))
+            {
+                System.IO.File.Delete(($"{path}/Compressions/{name}.lzw"));
+            }
+            ResetVariables();
+
+            using var saver = new FileStream($"{path}/Uploads/{file.FileName}", FileMode.OpenOrCreate);
+            await file.CopyToAsync(saver);
+
+            using var reader = new BinaryReader(saver);
+            int bufferSize = 2000;
+            var buffer = new byte[bufferSize];
+
+            saver.Position = saver.Seek(0, SeekOrigin.Begin);
+            while (saver.Position != saver.Length)
+            {
+                buffer = reader.ReadBytes(bufferSize);
+                FillDictionary(buffer);
+            }
+
+            saver.Position = saver.Seek(0, SeekOrigin.Begin);
+            while (saver.Position != saver.Length)
+            {
+                buffer = reader.ReadBytes(bufferSize);
+                Characters = buffer.ToList();
+                MaxValueLength = 0;
+                while (Characters.Count != 0)
+                {
+                    int codeLength = 0;
+                    string Subchain = Characters[codeLength].ToString();
+                    codeLength++;
+                    while (Subchain.Length != 0)
+                    {
+                        if (Characters.Count > codeLength)
+                        {
+                            if (!LZWTable.ContainsKey(Subchain + Characters[codeLength].ToString()))
+                            {
+                                NumbersToWrite.Add(LZWTable[Subchain]);
+                                Subchain += Characters[codeLength].ToString();
+                                AddValueToDictionary(Subchain);
+                                Subchain = string.Empty;
+                                for (int i = 0; i < codeLength; i++)
+                                {
+                                    Characters.RemoveAt(0);
+                                }
+                            }
+                            else
+                            {
+                                Subchain += Characters[codeLength].ToString();
+                                codeLength++;
+                            }
+                        }
+                        else
+                        {
+                            if (saver.Position != saver.Length)
+                            {
+                                buffer = reader.ReadBytes(bufferSize);
+                                List<byte> aux = buffer.ToList();
+                                while (Characters.Count > 0)
+                                {
+                                    aux.Insert(0, Characters[0]);
+                                    Characters.RemoveAt(0);
+                                }
+                                Characters = aux;
+                                MaxValueLength = 0;
+                            }
+                            else
+                            {
+                                NumbersToWrite.Add(LZWTable[Subchain]);
+                                AddValueToDictionary(Subchain);
+                                for (int i = 0; i < codeLength; i++)
+                                {
+                                    Characters.RemoveAt(0);
+                                }
+                                Subchain = string.Empty;
+                            }
+
+                        }
+                    }
+                }
+            }
+            reader.Close();
+            saver.Close();
+
+            MaxValueLength = Convert.ToString(NumbersToWrite.Max(), 2).Length;
+
+            if (!Directory.Exists($"{path}/Compressions"))
+            {
+                Directory.CreateDirectory($"{path}/Compressions");
+            }
+            using var fileToWrite = new FileStream($"{path}/Compressions/{name}.lzw", FileMode.OpenOrCreate);
+            using var writer = new BinaryWriter(fileToWrite);
+            string compressionCode = "";
+            writer.Write(Convert.ToByte(MaxValueLength));
+            writer.Write(Convert.ToByte(Differentchar.Count()));
+            foreach (var item in Differentchar)
+            {
+                writer.Write(item);
+            }
+            string code = "";
+            foreach (var number in NumbersToWrite)
+            {
+                compressionCode = Convert.ToString(number, 2);
+                while (compressionCode.Length < MaxValueLength)
+                {
+                    compressionCode = "0" + compressionCode;
+                }
+                code += compressionCode;
+                while (code.Length >= 8)
+                {
+                    writer.Write(Convert.ToByte(code.Substring(0, 8), 2));
+                    code = code.Remove(0, 8);
+                }
+            }
+            if (code.Length != 0)
+            {
+                while (code.Length != 8)
+                {
+                    code += "0";
+                }
+                writer.Write(Convert.ToByte(code, 2));
+                code = string.Empty;
+            }
+            writer.Close();
+            fileToWrite.Close();
+            ResetVariables();
+        }
+
         private void Compression(byte[] Text)
         {
             Characters = Text.ToList();
