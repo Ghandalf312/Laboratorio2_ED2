@@ -51,7 +51,38 @@ namespace api.Controllers
         {
             return "value";
         }
-     
+
+        // POST api/<HuffmanController>
+        [Route("compress/lzw/{name}")]
+        [HttpPost]
+        public async Task<IActionResult> PostLzwAsync([FromForm] IFormFile file, string name)
+        {
+            try
+            {
+                int i = 1;
+                var originalname = name;
+                if (!Directory.Exists($"{Environment.ContentRootPath}/Uploads/"))
+                {
+                    Directory.CreateDirectory($"{Environment.ContentRootPath}/Uploads/");
+                }
+                while (System.IO.File.Exists($"{Environment.ContentRootPath}/Uploads/{name}"))
+                {
+                    name = originalname + "(" + i.ToString() + ")";
+                    i++;
+                }
+                await Singleton.Instance._Compressions.CompressFile(Environment.ContentRootPath, file, name);
+                var LZWInfo = new HuffmanCompressions();
+                LZWInfo.SetAttributes(Environment.ContentRootPath, file.FileName, name);
+                Singleton.Instance.HistoryList.Add(LZWInfo);
+
+                return PhysicalFile($"{Environment.ContentRootPath}/Compressions/{name}.lzw", MediaTypeNames.Text.Plain, $"{name}.lzw");
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
         // POST api/<HuffmanController>
         [HttpPost]
         [Route("compress/huffman/{name}")]
