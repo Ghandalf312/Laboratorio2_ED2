@@ -45,6 +45,31 @@ namespace api.Models
             file.Close();
         }
 
+        public void SetAttributesLZW(string path, string prevName, string newName)
+        {
+            var CountBytesO = System.IO.File.ReadAllBytes($"{path}/uploads/{prevName}");
+            var FileP = $"{path}/{newName}";
+            double BNO = CountBytesO.Count();
+            var CountBytesC = System.IO.File.ReadAllBytes($"{path}/Compressions/{newName}.lzw");
+            double BNC = CountBytesC.Count();
+
+            OriginalName = prevName;
+            CompressedName = newName;
+            CompressedFilePath = FileP;
+            GetRatio(BNC, BNO);
+            GetFactor(BNC, BNO);
+            RPercentage();
+
+            LoadHistList(path);
+            Singleton.Instance.HistoryList.Add(this);
+            var file = new FileStream($"{path}/CompressionHist", FileMode.OpenOrCreate);
+            var BytesToWrite = JsonSerializer.Serialize(Singleton.Instance.HistoryList, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            using var writer = new StreamWriter(file);
+            writer.WriteLine(BytesToWrite);
+            writer.Close();
+            file.Close();
+        }
+
         public static void LoadHistList(string path)
         {
             var file = new FileStream($"{path}/CompressionHist", FileMode.OpenOrCreate);

@@ -72,7 +72,7 @@ namespace api.Controllers
                 }
                 await Singleton.Instance._Compressions.CompressFile(Environment.ContentRootPath, file, name);
                 var LZWInfo = new HuffmanCompressions();
-                LZWInfo.SetAttributes(Environment.ContentRootPath, file.FileName, name);
+                LZWInfo.SetAttributesLZW(Environment.ContentRootPath, file.FileName, name);
                 Singleton.Instance.HistoryList.Add(LZWInfo);
 
                 return PhysicalFile($"{Environment.ContentRootPath}/Compressions/{name}.lzw", MediaTypeNames.Text.Plain, $"{name}.lzw");
@@ -122,6 +122,32 @@ namespace api.Controllers
                 }
                 await Singleton.Instance.HuffmanTree.DecompressFile(Environment.ContentRootPath, file, name);
                 return PhysicalFile($"{Environment.ContentRootPath}/{name}", MediaTypeNames.Text.Plain, ".txt"); 
+        }
+
+        [Route("decompress/lzw")]
+        [HttpPost]
+        public async Task<IActionResult> PostDecompressAsync([FromForm] IFormFile file)
+        {
+
+            try
+            {
+                HuffmanCompressions.LoadHistList(Environment.ContentRootPath);
+                var name = "";
+                foreach (var item in Singleton.Instance.HistoryList)
+                {
+                    if ($"{item.CompressedName}.lzw" == file.FileName)
+                    {
+                        name = item.OriginalName;
+                    }
+                }
+                await Singleton.Instance._Compressions.DecompressFile(Environment.ContentRootPath, file, name);
+                return PhysicalFile($"{Environment.ContentRootPath}/Decompressions/{name}", MediaTypeNames.Text.Plain, name);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+
         }
     }
 }
